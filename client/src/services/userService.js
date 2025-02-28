@@ -9,7 +9,7 @@ export default {
         return users;
     },
     async create(userData) {
-        const { country, city, street, streetNumber, postData } = userData;
+        const { country, city, street, streetNumber, ...postData } = userData;
 
         postData.address = { country, city, street, streetNumber };
         postData.createdAt = new Date().toISOString();

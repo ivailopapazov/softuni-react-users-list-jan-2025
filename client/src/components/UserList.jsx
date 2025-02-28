@@ -6,10 +6,12 @@ import Pagination from "./Pagination";
 import Search from "./Search";
 import UserListItem from "./UserListItem";
 import UserCreate from "./UserCreate";
+import UserInfo from "./UserInfo";
 
 export default function UserList() {
     const [users, setUsers] = useState([]);
     const [showCreate, setShowCreate] = useState(false);
+    const [userIdInfo, setUserIdInfo] = useState();
 
     useEffect(() => {
         userService.getAll()
@@ -36,13 +38,17 @@ export default function UserList() {
 
         // create new user on server
         const newUser = await userService.create(userData);
-        
+
         // update local state
         setUsers(state => [...state, newUser])
 
         // close modal 
         setShowCreate(false);
-    }
+    };
+
+    const userInfoClickHandler = (userId) => {
+        setUserIdInfo(userId);
+    };
 
     return (
         <section className="card users-container">
@@ -54,6 +60,12 @@ export default function UserList() {
                     onSave={saveCreateUserClickHandler}
                 />)
             }
+
+            {userIdInfo && (
+                <UserInfo
+                    userId={userIdInfo}
+                />
+            )}
 
             <div className="table-wrapper">
                 <div className="overlays">
@@ -166,6 +178,7 @@ export default function UserList() {
                     <tbody>
                         {users.map(user => <UserListItem
                             key={user._id}
+                            onInfoClick={userInfoClickHandler}
                             {...user}
                         />)}
                     </tbody>
