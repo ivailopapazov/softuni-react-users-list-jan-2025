@@ -45,7 +45,7 @@ export default function UserInfo({
                             <p>Phone Number: <strong>{user.phoneNumber}</strong></p>
                             <p>
                                 Address:
-                                <strong> {user.country}, {user.city}, {user.street} {user.streetNumber} </strong>
+                                <strong> {user.address?.country}, {user.address?.city}, {user.address?.street} {user.address?.streetNumber} </strong>
                             </p>
 
                             <p>Created on: <strong>{fromIsoDate(user.createdAt)}</strong></p>
